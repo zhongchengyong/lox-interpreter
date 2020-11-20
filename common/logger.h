@@ -72,4 +72,6 @@ class Logger {
 #define LOG_INFO  lox_common::Logger(lox_common::LogLevel::INFO,  std::cout)
 #define LOG_DEBUG lox_common::Logger(lox_common::LogLevel::DEBUG, std::cout)
 
+void Error(size_t line, const std::string &msg);
+
 #endif //LOX_INTERPRETER_COMMON_LOGGER_H_

@@ -9,14 +9,18 @@
 
 #include "lexer.h"
 
+namespace lox {
 class Lox {
- private:
-  int i;
  public:
   void RunPrompt();
-  void RunFile(const std::string& file_name);
+  void RunFile(const std::string &file_name);
+  void Run(const std::string &source);
 
+ private:
+  // Indicate if error occurs
+  static bool m_error;
 
 };
+} // namespace lox
 
 #endif //LOX_INTERPRETER_LOX_LOX_H_

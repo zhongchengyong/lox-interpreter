@@ -9,19 +9,18 @@
 
 #include "lox.h"
 
-using namespace lox_lex;
+using namespace lox;
 
 void Lox::RunPrompt() {
   std::string input;
   while (true) {
     std::cin >> input;
     if (input == "q") break;
-
+    Run(input);
   }
 }
 
 void Lox::RunFile(const std::string& file_name) {
-  Lexer lexer;
   std::ifstream is(file_name);
   if (!is) {
     LOG_ERROR << "File not exists." << std::endl;
@@ -29,5 +28,11 @@ void Lox::RunFile(const std::string& file_name) {
   }
   std::stringstream ss;
   ss << is.rdbuf();
-  lexer.ScanTokens(ss.str());
+  Run(ss.str());
+}
+
+void Lox::Run(const std::string &source) {
+  Lexer lexer;
+  lexer.ScanTokens(source);
+  if (m_error) return;
 }

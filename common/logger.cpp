@@ -3,3 +3,7 @@
 //
 
 #include "logger.h"
+
+void Error(size_t line, const std::string &msg) {
+  std::cerr << "[line " << line << "] Error: " << msg;
+}
