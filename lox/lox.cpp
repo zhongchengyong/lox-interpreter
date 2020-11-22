@@ -11,6 +11,8 @@
 
 using namespace lox;
 
+bool Lox::m_error = false;
+
 void Lox::RunPrompt() {
   std::string input;
   while (true) {
@@ -32,7 +34,7 @@ void Lox::RunFile(const std::string& file_name) {
 }
 
 void Lox::Run(const std::string &source) {
-  Lexer lexer;
-  lexer.ScanTokens(source);
+  Lexer lexer(source);
+  lexer.ScanTokens();
   if (m_error) return;
 }

@@ -9,7 +9,7 @@ int main(int argc, char* argv[]){
     std::cout << "Usage: zlox [script]" << std::endl;
     exit(64);
   }
-  Lox lox;
+  lox::Lox lox;
   if (argc == 2) {
     lox.RunFile(argv[1]);
   } else {

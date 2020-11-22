@@ -13,8 +13,10 @@ namespace lox {
 
 class Lexer {
  public:
-  Lexer() = default;
-  void ScanTokens(const std::string &source);
+  explicit Lexer(const std::string &source) : m_source{source} {}
+  void ScanTokens();
+ private:
+  std::string m_source;
 };
 
 /**

@@ -6,6 +6,6 @@
 using namespace lox_common;
 using namespace lox;
 
-void Lexer::ScanTokens(const std::string& source) {
+void Lexer::ScanTokens() {
   LOG_INFO << "Begin scan tokens";
 }
