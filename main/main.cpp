@@ -6,8 +6,8 @@
 #include "lox/lox.h"
 
 int main(int argc, char* argv[]){
-  testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
+//  testing::InitGoogleTest(&argc, argv);
+//  return RUN_ALL_TESTS();
 //  if (argc > 2) {
 //    std::cout << "Usage: zlox [script]" << std::endl;
 //    exit(64);
