@@ -1,5 +1,5 @@
 #include "lox/ast_printer.h"
-#include "testlox.h"
+#include "test_lox.h"
 
 LoxTest::LoxTest() {
 //    // Have qux return true by default

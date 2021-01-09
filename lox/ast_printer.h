@@ -48,40 +48,6 @@ class AstPrinter : public ExprVisitor {
     ss << ")";
     return ss.str();
   }
-
-
-// FIXME(zhongcy): Check whether implement correctly?
-//  template <typename Args>
-//  void Parenthesize(std::stringstream &ss, Args&... args) {
-//    Parenthesize(ss, args...);
-//  }
-
-//  template <typename... Args>
-//  void Parenthesize<>(std::stringstream &ss, Expr& expr, Args&... args) {
-//    ss << " ";
-//    ss << std::any_cast<std::string>(expr.Accept(*this));
-//    Parenthesize(ss, args...);
-//  }
-
-//  template <typename Args>
-//  void Parenthesize(std::stringstream &ss,  Args& args) {
-//    ss << " ";
-//    ss << str;
-//    Parenthesize(ss, args);
-//  }
-
-//  template <>
-//  void Parenthesize<>(std::stringstream &ss, Expr& expr) {
-//    ss << " ";
-//    ss << std::any_cast<std::string>(expr.Accept(*this));
-//  }
-
-//  template <>
-//  void Parenthesize(std::stringstream &ss, std::string& arg) {
-//    ss << " ";
-//    ss << arg;
-//  }
-
 };
 } // namespace lox
 
