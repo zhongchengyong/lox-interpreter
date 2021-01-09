@@ -19,7 +19,7 @@ std::string ParserTest::VisitLiteral(Literal& literal) {
   return std::any_cast<std::string>(m_ast_printer.VisitLiteral(literal));
 }
 
-TEST_F(ParserTest, Literal) {
+TEST_F(ParserTest, Literal) { //NOLINT
   Literal literal;
   LoxToken lox_token{TokenType::MINUS, "-", "", 1};
   literal.m_value = lox_token;
