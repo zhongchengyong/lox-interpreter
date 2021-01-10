@@ -1,6 +1,6 @@
 aux_source_directory(. LOX_SRC)
 if(DEFINED ENV{BOOST_ROOT_1_72_0})
-    message(ENV{BOOST_ROOT_1_72_0})
+    message($ENV{BOOST_ROOT_1_72_0})
     file(TO_CMAKE_PATH $ENV{BOOST_ROOT_1_72_0} CMAKE_BOOST_ROOT)
     list(APPEND BOOST_ROOT "$ENV{CMAKE_BOOST_ROOT}")
     list(APPEND Boost_INCLUDE_DIRS "$ENV{CMAKE_BOOST_ROOT}/boost/include")
