@@ -17,8 +17,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Setup Cmd
-      uses: actions/checkout@v2
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.2
       env:
         ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
 
