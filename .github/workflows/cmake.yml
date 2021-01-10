@@ -17,6 +17,11 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Setup Cmd
+      uses: actions/checkout@v2
+      env:
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: 'true'
+
     - name: Config boost
       run: echo "::set-env name=Boost_ROOT::$BOOST_ROOT_1_72_0"
 
