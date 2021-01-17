@@ -15,6 +15,18 @@ std::any lox::interpreter::VisitBinary(lox::Binary &expr) {
   std::any left = Evaluate(*expr.m_left);
   std::any right= Evaluate(*expr.m_right);
   switch (expr.m_op.m_type) {
+    case TokenType::GREATER:
+      return std::any_cast<double>(left) > std::any_cast<double>(right);
+    case TokenType::GREATER_EQUAL:
+      return std::any_cast<double>(left) >= std::any_cast<double>(right);
+    case TokenType::LESS:
+      return std::any_cast<double>(left) < std::any_cast<double>(right);
+    case TokenType::LESS_EQUAL:
+      return std::any_cast<double>(left) <= std::any_cast<double>(right);
+    case TokenType::BANG_EQUAL:
+      return !IsEqual(left, right);
+    case TokenType::EQUAL_EQUAL:
+      return IsEqual(left, right);
     case TokenType::MINUS:
       return std::any_cast<double>(left) - std::any_cast<double>(right);
     case TokenType::SLASH:
@@ -82,8 +94,26 @@ std::any lox::interpreter::Evaluate(lox::Expr &expr) {
   return expr.Accept(*this);
 }
 
-bool lox::interpreter::IsTruthy(std::any obj) {
+bool lox::interpreter::IsTruthy(const std::any& obj) {
   if (!obj.has_value()) return false;
   if (obj.type() == typeid(bool)) return std::any_cast<bool>(obj);
   return true;
+}
+
+/**
+ * Note: We have handled 3 types here.
+ */
+bool lox::interpreter::IsEqual(const std::any& left, const std::any& right) {
+  if (!left.has_value() && !right.has_value()) return true;
+  if (left.type() != right.type()) return false;
+  if (left.type() == typeid(bool)) {
+    return std::any_cast<bool>(left) == std::any_cast<bool>(right);
+  }
+  if (left.type() == typeid(std::string)) {
+    return std::any_cast<std::string>(left) == std::any_cast<std::string>(right);
+  }
+  if (left.type() == typeid(double)) {
+    return std::any_cast<double>(left) == std::any_cast<double>(right);
+  }
+  return false;
 }

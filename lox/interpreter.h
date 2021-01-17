@@ -31,7 +31,8 @@ class interpreter : public ExprVisitor {
    * The helper function which simply send the expression back into the interpreter's visitor implementation.
    */
   std::any Evaluate(Expr& expr);
-  static bool IsTruthy(std::any obj);
+  static bool IsTruthy(const std::any& obj);
+  static bool IsEqual(const std::any& any, const std::any& any_1);
 };
 }
 
