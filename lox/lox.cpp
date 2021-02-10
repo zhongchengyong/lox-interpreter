@@ -11,7 +11,9 @@
 
 using namespace lox;
 
-bool Lox::m_error = false;
+bool Lox::m_had_error = false;
+bool Lox::m_has_runtime_error = false;
+
 
 void Lox::RunPrompt() {
   std::string input;
@@ -31,10 +33,18 @@ void Lox::RunFile(const std::string& file_name) {
   std::stringstream ss;
   ss << is.rdbuf();
   Run(ss.str());
+  if (m_had_error) exit(65);
+  if (m_has_runtime_error) exit(70);
 }
 
 void Lox::Run(const std::string &source) {
   Lexer lexer(source);
   lexer.ScanTokens();
-  if (m_error) return;
+  if (m_had_error) return;
+  interp_up->Interpret()
+}
+
+void Lox::RunTimeError(const RuntimeError &error) {
+  std::cerr << error.what() << "\n[line " << error.GetToken().m_line << "]" << std::endl;
+
 }

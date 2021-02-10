@@ -3,15 +3,16 @@
 //
 
 #include "expr.h"
-#include "interpreter.h"
+#include "Interpreter.h"
 #include "exception.h"
+#include "lox.h"
 
 #define UNREACHABLE_CONDITION assert(false && "Unreachable")
 
-std::any lox::interpreter::VisitAssign(lox::Assign &expr) {
+std::any lox::Interpreter::VisitAssign(lox::Assign &expr) {
   return std::any();
 }
-std::any lox::interpreter::VisitBinary(lox::Binary &expr) {
+std::any lox::Interpreter::VisitBinary(lox::Binary &expr) {
   std::any left = Evaluate(*expr.m_left);
   std::any right= Evaluate(*expr.m_right);
   switch (expr.m_op.m_type) {
@@ -42,38 +43,38 @@ std::any lox::interpreter::VisitBinary(lox::Binary &expr) {
   }
   UNREACHABLE_CONDITION;
 }
-std::any lox::interpreter::VisitCall(lox::Call &expr) {
+std::any lox::Interpreter::VisitCall(lox::Call &expr) {
   return std::any();
 }
-std::any lox::interpreter::VisitGet(lox::Get &expr) {
+std::any lox::Interpreter::VisitGet(lox::Get &expr) {
   return std::any();
 }
 
-std::any lox::interpreter::VisitGrouping(lox::Grouping &expr) {
+std::any lox::Interpreter::VisitGrouping(lox::Grouping &expr) {
   return Evaluate(*expr.m_expression);
 }
 
-std::any lox::interpreter::VisitLiteral(lox::Literal &expr) {
+std::any lox::Interpreter::VisitLiteral(lox::Literal &expr) {
   return expr.m_value;
 }
 
-std::any lox::interpreter::VisitLogical(lox::Logical &expr) {
+std::any lox::Interpreter::VisitLogical(lox::Logical &expr) {
   return std::any();
 }
 
-std::any lox::interpreter::VisitSet(lox::Set &expr) {
+std::any lox::Interpreter::VisitSet(lox::Set &expr) {
   return std::any();
 }
 
-std::any lox::interpreter::VisitSuper(lox::Super &expr) {
+std::any lox::Interpreter::VisitSuper(lox::Super &expr) {
   return std::any();
 }
 
-std::any lox::interpreter::VisitThis(lox::This &expr) {
+std::any lox::Interpreter::VisitThis(lox::This &expr) {
   return std::any();
 }
 
-std::any lox::interpreter::VisitUnary(lox::Unary &expr) {
+std::any lox::Interpreter::VisitUnary(lox::Unary &expr) {
   std::any right = Evaluate(*expr.m_right);
   switch (expr.m_op.m_type) {
     case TokenType::MINUS:
@@ -86,15 +87,39 @@ std::any lox::interpreter::VisitUnary(lox::Unary &expr) {
   UNREACHABLE_CONDITION;
 }
 
-std::any lox::interpreter::VisitVariable(lox::Variable &expr) {
+std::any lox::Interpreter::VisitVariable(lox::Variable &expr) {
   return std::any();
 }
 
-std::any lox::interpreter::Evaluate(lox::Expr &expr) {
+std::string Stringify(const std::any& obj) {
+  if (!obj.has_value()) return "nil";
+  if (obj.type() == typeid(double)) {
+    std::string text = std::to_string(std::any_cast<double>(obj));
+    if (text.ends_with(".0")) {
+      text = text.substr(0, text.size() - 2);
+    }
+    return text;
+  }
+  if (obj.type() == typeid(bool)) {
+    return std::to_string(std::any_cast<bool>(obj));
+  }
+  return std::any_cast<std::string>(obj);
+}
+
+void lox::Interpreter::Interpret(lox::Expr &expr) {
+  try {
+    std::any obj = expr.Accept(*this);
+    std::cout << Stringify(obj) << std::endl;
+  }catch (const RuntimeError& error) {
+    Lox::RuntimeError(error);
+  }
+}
+
+std::any lox::Interpreter::Evaluate(lox::Expr &expr) {
   return expr.Accept(*this);
 }
 
-bool lox::interpreter::IsTruthy(const std::any& obj) {
+bool lox::Interpreter::IsTruthy(const std::any& obj) {
   if (!obj.has_value()) return false;
   if (obj.type() == typeid(bool)) return std::any_cast<bool>(obj);
   return true;
@@ -103,7 +128,7 @@ bool lox::interpreter::IsTruthy(const std::any& obj) {
 /**
  * Note: We have handled 3 types here.
  */
-bool lox::interpreter::IsEqual(const std::any& left, const std::any& right) {
+bool lox::Interpreter::IsEqual(const std::any& left, const std::any& right) {
   if (!left.has_value() && !right.has_value()) return true;
   if (left.type() != right.type()) return false;
   if (left.type() == typeid(bool)) {
@@ -117,3 +142,4 @@ bool lox::interpreter::IsEqual(const std::any& left, const std::any& right) {
   }
   return false;
 }
+

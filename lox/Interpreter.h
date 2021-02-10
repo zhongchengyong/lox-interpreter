@@ -10,9 +10,9 @@
 namespace lox {
 
 /**
- * The lox interpreter for Expression.
+ * The lox Interpreter for Expression.
  */
-class interpreter : public ExprVisitor {
+class Interpreter : public ExprVisitor {
  public:
   std::any VisitAssign(Assign &expr) override;
   std::any VisitBinary(Binary &expr) override;
@@ -26,13 +26,14 @@ class interpreter : public ExprVisitor {
   std::any VisitThis(This &expr) override;
   std::any VisitUnary(Unary &expr) override;
   std::any VisitVariable(Variable &expr) override;
+  void Interpret(Expr &expr);
  private:
   /**
-   * The helper function which simply send the expression back into the interpreter's visitor implementation.
+   * The helper function which simply send the expression back into the Interpreter's visitor implementation.
    */
-  std::any Evaluate(Expr& expr);
-  static bool IsTruthy(const std::any& obj);
-  static bool IsEqual(const std::any& any, const std::any& any_1);
+  std::any Evaluate(Expr &expr);
+  static bool IsTruthy(const std::any &obj);
+  static bool IsEqual(const std::any &any, const std::any &any_1);
 };
 }
 
